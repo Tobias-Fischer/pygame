@@ -435,7 +435,7 @@ for e in extensions:
         # some warnings are skipped here
         ("/W3", "/wd4142", "/wd4996")
         if sys.platform == "win32"
-        else ("-Wall", "-Wno-error=unknown-pragmas")
+        else ("-Wall", "-Wno-error=unknown-pragmas", "-Wno-error=unused-command-line-argument")
     )
 
     if "surface" in e.name and sys.platform == "darwin":
