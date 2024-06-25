@@ -457,10 +457,16 @@ for e in extensions:
     if enable_arm_neon:
         e.define_macros.append(('PG_ENABLE_ARM_NEON', '1'))
 
-    e.extra_compile_args.extend(
-        # some warnings are skipped here
-        ("/W3", "/wd4142", "/wd4996") if IS_MSC else ("-Wall", "-Wno-error=unknown-pragmas")
-    )
+    # some warnings are skipped here
+    skipped_warnings = ("-Wall", "-Wno-error=unknown-pragmas")
+    if sys.platform == "win32":
+        skipped_warnings = ("/W3", "/wd4142", "/wd4996")
+    elif sys.platform == "darwin":
+        skipped_warnings += ("-Wno-error=unused-command-line-argument",)
+    else:
+        skipped_warnings += ("-Wno-error=multichar",)
+
+    e.extra_compile_args.extend(skipped_warnings)
 
     if "surface" in e.name and sys.platform == "darwin":
         # skip -Werror on alphablit because sse2neon is used on arm mac
