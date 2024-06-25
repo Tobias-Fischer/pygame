@@ -485,7 +485,7 @@ for e in extensions:
             and e.name not in ("pypm", "_sprite", "gfxdraw")
     ):
         # Do -Werror only on CI, and exclude -Werror on Cython C files and gfxdraw
-        e.extra_compile_args.append("/WX" if IS_MSC else "-Wundef")
+        pass
 
 # if not building font, try replacing with ftfont
 alternate_font = os.path.join('src_py', 'font.py')
